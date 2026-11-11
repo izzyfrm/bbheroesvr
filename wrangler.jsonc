@@ -1,0 +1,15 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "bbheroesvr",
+  "compatibility_date": "2026-11-01",
+  "assets": {
+    "directory": "./public",
+    "html_handling": "auto-trailing-slash",
+    "not_found_handling": "404-page"
+  },
+  "routes": [
+    { "pattern": "bbheroesvr.com", "custom_domain": true },
+    { "pattern": "www.bbheroesvr.com", "custom_domain": true }
+  ],
+  "observability": { "enabled": true }
+}

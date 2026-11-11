@@ -5,287 +5,156 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Basketball Heroes — Superhero Basketball in VR | Meta Quest</title>
   <meta name="description" content="Basketball Heroes is a VR basketball game with superhero energy, built in Unity 6.6 for Meta Quest. Wishlist on Meta — coming soon.">
-  <meta name="theme-color" content="#0a0a0d">
+  <meta name="theme-color" content="#0d0b26">
   <meta property="og:title" content="Basketball Heroes — VR basketball, superpowered">
   <meta property="og:description" content="Superhero basketball in VR for Meta Quest. Built in Unity 6.6. Wishlist on Meta — coming soon.">
   <meta property="og:type" content="website">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:site" content="@BBHeroesVR">
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Ccircle cx='100' cy='100' r='96' fill='%23ff5a1f'/%3E%3Cg stroke='%230a0a0d' stroke-width='9' fill='none'%3E%3Cpath d='M100 4v192M4 100h192M30 30c40 40 40 100 0 140M170 30c-40 40-40 100 0 140'/%3E%3C/g%3E%3C/svg%3E">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Ccircle cx='100' cy='100' r='96' fill='%23ff6b1a'/%3E%3Cg stroke='%230d0b26' stroke-width='9' fill='none'%3E%3Cpath d='M100 4v192M4 100h192M30 30c40 40 40 100 0 140M170 30c-40 40-40 100 0 140'/%3E%3C/g%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800;900&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
-  <script>document.documentElement.classList.add('js');</script>
+  <script type="importmap">{"imports":{"three":"./js/vendor/three.module.min.js"}}</script>
+  <script type="module" src="js/main.js"></script>
 </head>
 <body>
-
-<!-- ============ ICON + BALL SPRITE ============ -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
-  <defs>
-    <radialGradient id="ballg" cx="35%" cy="30%" r="80%">
-      <stop offset="0" stop-color="#ff9a52"/><stop offset="0.5" stop-color="#ff5a1f"/><stop offset="1" stop-color="#a82a00"/>
-    </radialGradient>
-  </defs>
-  <symbol id="ball" viewBox="0 0 200 200">
-    <circle cx="100" cy="100" r="96" fill="url(#ballg)"/>
-    <g fill="none" stroke="#0a0a0d" stroke-width="7" stroke-linecap="round">
-      <path d="M100 4v192M4 100h192"/><path d="M30 30c40 40 40 100 0 140M170 30c-40 40-40 100 0 140"/>
-      <circle cx="100" cy="100" r="96" stroke-width="6"/>
-    </g>
-  </symbol>
-  <symbol id="i-x" viewBox="0 0 24 24"><path fill="currentColor" d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/></symbol>
   <symbol id="i-discord" viewBox="0 0 24 24"><path fill="currentColor" d="M20.317 4.37a19.79 19.79 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.74 19.74 0 0 0 3.677 4.37a.07.07 0 0 0-.032.028C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.1 13.1 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.3 12.3 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.84 19.84 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03ZM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418Zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418Z"/></symbol>
-  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></symbol>
-  <symbol id="i-mail" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></symbol>
-  <symbol id="i-zap" viewBox="0 0 24 24"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"/></symbol>
-  <symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></symbol>
-  <symbol id="i-vr" viewBox="0 0 24 24"><path d="M3 9a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2h-3.5l-1.5-2.2h-4L8.5 17H5a2 2 0 0 1-2-2z"/><circle cx="8" cy="12" r="1"/><circle cx="16" cy="12" r="1"/></symbol>
-  <symbol id="i-box" viewBox="0 0 24 24"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></symbol>
-  <symbol id="i-users" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></symbol>
-  <symbol id="i-flame" viewBox="0 0 24 24"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.07-2.14-.22-4.05 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.15.43-2.29 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></symbol>
-  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></symbol>
-  <symbol id="i-copy" viewBox="0 0 24 24"><rect x="8" y="8" width="14" height="14" rx="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></symbol>
-  <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
-  <symbol id="i-code" viewBox="0 0 24 24"><path d="m16 18 6-6-6-6"/><path d="m8 6-6 6 6 6"/></symbol>
-  <symbol id="i-crown" viewBox="0 0 24 24"><path d="M11.56 3.27a.5.5 0 0 1 .88 0l3.17 5.8a.5.5 0 0 0 .8.1l3.5-3.5a.5.5 0 0 1 .85.45l-2.4 11.4A1 1 0 0 1 17.4 18.4H6.6a1 1 0 0 1-.96-.68L3.24 6.32a.5.5 0 0 1 .85-.45l3.5 3.5a.5.5 0 0 0 .8-.1z"/><path d="M5 21h14"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path fill="currentColor" d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></g></symbol>
+  <symbol id="i-copy" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="8" width="14" height="14" rx="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></g></symbol>
+  <symbol id="i-ball" viewBox="0 0 200 200"><circle cx="100" cy="100" r="96" fill="#ff6b1a"/><g stroke="#0d0b26" stroke-width="10" fill="none"><path d="M100 4v192M4 100h192M30 30c40 40 40 100 0 140M170 30c-40 40-40 100 0 140"/></g></symbol>
 </svg>
 
-<div class="grain" aria-hidden="true"></div>
+<canvas id="scene" aria-hidden="true"></canvas>
+<a class="skip" href="#main">Skip to content</a>
 
-<!-- ============ NAV ============ -->
 <header class="nav" id="nav">
-  <div class="wrap">
-    <a href="#top" class="logo" aria-label="Basketball Heroes home">
-      <svg viewBox="0 0 200 200"><use href="#ball"/></svg>
-      <span>Basketball <b>Heroes</b></span>
-    </a>
-    <nav class="nav-links" id="navlinks" aria-label="Primary">
-      <a href="#about">About</a>
-      <a href="#features">Features</a>
-      <a href="#community">Community</a>
-      <a href="#contact">Contact</a>
-      <a href="https://discord.gg/UDTt6UsswX" class="btn sm discord" target="_blank" rel="noopener noreferrer">
-        <svg class="icon icon-fill"><use href="#i-discord"/></svg>Join Discord
-      </a>
-    </nav>
-    <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false" aria-controls="navlinks"><span></span></button>
-  </div>
+  <a href="#top" class="logo" aria-label="Basketball Heroes, back to top"><svg aria-hidden="true"><use href="#i-ball"/></svg>BB Heroes</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#highlights">Highlights</a></li>
+    <li><a href="#court">Take a shot</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a class="btn btn-ball btn-sm" href="https://discord.gg/UDTt6UsswX" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-discord"/></svg>Join Discord</a>
 </header>
 
-<main id="top">
+<main id="main">
+  <section class="hero" id="top">
+    <div class="ball-anchor" data-ball aria-hidden="true"></div>
+    <div class="wrap">
+      <p class="status"><i aria-hidden="true"></i>In development for Meta Quest</p>
+      <h1><span><span>Basketball</span></span><span><span>Heroes</span></span></h1>
+      <div class="hero-foot">
+        <p class="hero-copy">Step into the arena. Shoot like a legend, play like a hero. Basketball, supercharged, in full VR.</p>
+        <div class="ctas">
+          <a class="btn btn-ball" href="https://discord.gg/UDTt6UsswX" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-discord"/></svg>Join the Discord</a>
+          <a class="btn btn-ghost" href="https://x.com/BBHeroesVR" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-x"/></svg>Follow on X</a>
+        </div>
+      </div>
+    </div>
+  </section>
 
-<!-- ============ HERO ============ -->
-<section class="hero">
-  <div class="hero-bg"></div>
-  <svg class="court" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-    <circle cx="1180" cy="450" r="170"/><circle cx="1180" cy="450" r="26"/>
-    <path d="M1180 -20V920"/>
-    <path d="M1600 140H1380a310 310 0 0 0 0 620h220"/>
-    <rect x="1380" y="300" width="220" height="300"/>
-    <path d="M1600 300a150 150 0 0 0 -220 0M1600 600a150 150 0 0 1 -220 0"/>
-    <path d="M-20 820C260 700 520 700 800 820" />
-  </svg>
-  <canvas id="embers" aria-hidden="true"></canvas>
-
-  <div class="wrap">
-    <div class="hero-grid">
+  <section class="sec about" id="about">
+    <div class="wrap about-grid">
       <div>
-        <div class="badge-live"><i></i> VR Basketball &middot; Meta Quest &middot; In development</div>
-        <h1 class="display" aria-label="Basketball Heroes">
-          <span class="line"><span>Basketball</span></span>
-          <span class="line"><span class="heroes">Heroes</span></span>
-        </h1>
-        <p class="tagline">Step into the arena. Shoot like a legend, play like a <strong>hero</strong>. Basketball, supercharged &mdash; in full VR.</p>
-        <div class="cta-row">
-          <a class="btn discord evil" href="https://discord.gg/UDTt6UsswX" target="_blank" rel="noopener noreferrer">
-            <span class="eyes" aria-hidden="true"><span class="eye"><i></i></span><span class="eye"><i></i></span></span>
-            <svg class="icon icon-fill"><use href="#i-discord"/></svg>Join the Discord
-          </a>
-          <a class="btn bone evil" href="https://x.com/BBHeroesVR" target="_blank" rel="noopener noreferrer">
-            <span class="eyes" aria-hidden="true"><span class="eye"><i></i></span><span class="eye"><i></i></span></span>
-            <svg class="icon icon-fill"><use href="#i-x"/></svg>Follow on X
-          </a>
-        </div>
+        <h2>Basketball, but you're the hero.</h2>
+        <p class="lede">Real hoops. Real hands. Zero limits. You're not watching from the sideline. You're on the hardwood, ball in hand, with the whole arena around you.</p>
+        <p>It's built VR-first for Meta Quest, so every dribble, every shot and every bit of showboating is something you do with your own body, not a button press. We're building it in the open, so come hang out in the Discord and help shape it.</p>
+        <dl class="specs">
+          <div><dt>Engine</dt><dd>Unity 6.6</dd></div>
+          <div><dt>Platform</dt><dd>Meta Quest</dd></div>
+          <div><dt>Status</dt><dd>In development</dd></div>
+        </dl>
       </div>
+      <div class="ball-anchor" data-ball aria-hidden="true"></div>
+    </div>
+  </section>
 
-      <div class="hero-art" id="heroArt" aria-hidden="true">
-        <svg class="bolt" viewBox="0 0 100 100" preserveAspectRatio="none">
-          <polygon points="68,0 30,54 50,54 36,100 82,38 58,38 76,0" fill="rgba(53,211,255,.14)" stroke="#35d3ff" stroke-width="1.2" stroke-linejoin="round"/>
-        </svg>
-        <div class="shadow"></div>
-        <div class="ball"><svg viewBox="0 0 200 200"><use href="#ball"/></svg></div>
+  <section class="sec highlights" id="highlights">
+    <div class="wrap">
+      <h2>What it plays like</h2>
+      <div class="hl-grid">
+        <div class="hl-side" aria-hidden="true"><div class="hl-stick"><div class="ball-anchor" data-ball></div></div></div>
+        <ul class="rows">
+          <li class="row"><h3>Your hands. Your shot.</h3><p>Grab the ball, feel the release, sink it. Basketball that rewards real motion instead of button taps.</p></li>
+          <li class="row"><h3>Superhero energy</h3><p>This isn't a sim. It's basketball with a cape: bigger moments, louder highlights and the kind of plays you'll want to clip.</p></li>
+          <li class="row"><h3>Quest native</h3><p>Designed from day one for Meta Quest, so it plays like VR should: immersive, comfortable and responsive.</p></li>
+          <li class="row"><h3>Unity 6.6 under the hood</h3><p>A modern engine stack, so polish and performance go where VR players feel it most.</p></li>
+          <li class="row"><h3>Built with the squad</h3><p>An indie project shaped by its community. Updates, sneak peeks and feedback all happen on Discord and X.</p></li>
+        </ul>
       </div>
     </div>
-  </div>
+  </section>
 
-  <div class="scroll-cue" aria-hidden="true"><i></i>Scroll</div>
-</section>
-
-<!-- ============ MARQUEE ============ -->
-<div class="marquee" aria-hidden="true">
-  <div class="marquee-track">
-    <span>Basketball Heroes <svg class="icon icon-fill" viewBox="0 0 24 24"><use href="#i-zap"/></svg> Wishlist on Meta &mdash; Soon <svg class="icon icon-fill" viewBox="0 0 24 24"><use href="#i-zap"/></svg> Built in Unity 6.6 <svg class="icon icon-fill" viewBox="0 0 24 24"><use href="#i-zap"/></svg> VR Hoops <svg class="icon icon-fill" viewBox="0 0 24 24"><use href="#i-zap"/></svg> Made for Meta Quest <svg class="icon icon-fill" viewBox="0 0 24 24"><use href="#i-zap"/></svg></span>
-    <span>Basketball Heroes <svg class="icon icon-fill" viewBox="0 0 24 24"><use href="#i-zap"/></svg> Wishlist on Meta &mdash; Soon <svg class="icon icon-fill" viewBox="0 0 24 24"><use href="#i-zap"/></svg> Built in Unity 6.6 <svg class="icon icon-fill" viewBox="0 0 24 24"><use href="#i-zap"/></svg> VR Hoops <svg class="icon icon-fill" viewBox="0 0 24 24"><use href="#i-zap"/></svg> Made for Meta Quest <svg class="icon icon-fill" viewBox="0 0 24 24"><use href="#i-zap"/></svg></span>
-  </div>
-</div>
-
-<!-- ============ ABOUT ============ -->
-<section class="about" id="about">
-  <div class="wrap">
-    <span class="eyebrow" data-reveal>About the game</span>
-    <h2 class="about-lede" id="lede">Basketball, but you're <span class="hot">the hero.</span> Real hoops. Real hands. <span class="hot">Zero limits.</span></h2>
-
-    <div class="about-grid">
-      <div class="about-copy">
-        <p data-reveal><strong>Basketball Heroes</strong> is a VR basketball game where the court meets the comic book. You're not watching from the sideline &mdash; you're standing on the hardwood, ball in hand, with the whole arena around you.</p>
-        <p data-reveal style="--d:.08s">It's built <strong>VR-first</strong> for Meta Quest, so every dribble, every shot and every moment of showboating is something you do with your own body, not a button press.</p>
-        <p data-reveal style="--d:.16s">Under the hood it runs on <strong>Unity 6.6</strong>, tuned for the smooth, responsive feel that VR demands. We're building it in the open &mdash; come hang out in the Discord and help shape it.</p>
+  <section class="sec court" id="court">
+    <div class="wrap court-grid">
+      <div class="court-text">
+        <h2>Take a shot</h2>
+        <p class="court-copy">Hold the button to charge, then let go to shoot. Release while the meter is inside the blue zone for a swish.</p>
+        <div class="shooter-ui">
+          <div class="meter" aria-hidden="true"><span class="zone"></span><span class="fill" id="meter-fill"></span></div>
+          <button class="btn btn-ball shoot" id="shoot" type="button">Hold to shoot</button>
+          <p class="shot-result" id="shot-result" aria-live="polite"></p>
+          <p class="makes" id="makes"></p>
+        </div>
+        <p class="no-gl-note">Your browser can't show the 3D court, but the Discord is always open.</p>
       </div>
-      <div class="specs">
-        <div class="spec" data-reveal="right">
-          <div class="ico"><svg class="icon"><use href="#i-box"/></svg></div>
-          <div><small>Engine</small><b>Unity 6.6</b></div>
-        </div>
-        <div class="spec" data-reveal="right" style="--d:.1s">
-          <div class="ico"><svg class="icon"><use href="#i-vr"/></svg></div>
-          <div><small>Platform</small><b>Meta Quest VR</b></div>
-        </div>
-        <div class="spec" data-reveal="right" style="--d:.2s">
-          <div class="ico"><svg class="icon"><use href="#i-flame"/></svg></div>
-          <div><small>Status</small><b>In development</b></div>
-        </div>
+      <div class="hoop-cell"><div class="ball-anchor hoop-anchor" id="hoop-anchor" aria-hidden="true"></div></div>
+      <div class="shooter-cell"><div class="ball-anchor" id="shooter" data-ball aria-hidden="true"></div></div>
+    </div>
+  </section>
+
+  <section class="sec squad" id="community">
+    <div class="wrap">
+      <h2>Get in the game</h2>
+      <p class="squad-copy">Dev updates land on Discord first. Chat with the team and the community there, and follow on X for clips and news.</p>
+      <div class="ctas">
+        <a class="btn btn-ball" href="https://discord.gg/UDTt6UsswX" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-discord"/></svg>Join the Discord</a>
+        <a class="btn btn-ghost" href="https://x.com/BBHeroesVR" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-x"/></svg>@BBHeroesVR</a>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- ============ FEATURES ============ -->
-<section class="features" id="features">
-  <div class="wrap">
-    <div class="sec-head">
-      <div data-reveal>
-        <span class="eyebrow">Highlights</span>
-        <h2 class="display">Built to <em>hit</em><br>different</h2>
-      </div>
-      <p data-reveal style="--d:.1s">The pillars we're building the whole game around. Hover the cards &mdash; they hover back.</p>
-    </div>
-
-    <div class="cards">
-      <article class="card" data-reveal>
-        <div class="num">01 <svg class="icon"><use href="#i-target"/></svg></div>
-        <h3>Your hands.<br>Your shot.</h3>
-        <p>Grab the ball, feel the release, sink it. Basketball that rewards real motion instead of button taps.</p>
-      </article>
-      <article class="card wide accent" data-reveal style="--d:.08s">
-        <div class="num">02 <svg class="icon"><use href="#i-zap"/></svg></div>
-        <h3>Superhero<br>energy</h3>
-        <p>This isn't a sim. It's basketball with a cape &mdash; bigger moments, louder highlights and the kind of plays you'll want to clip.</p>
-      </article>
-      <article class="card" data-reveal>
-        <div class="num">03 <svg class="icon"><use href="#i-vr"/></svg></div>
-        <h3>Quest<br>native</h3>
-        <p>Designed from day one for Meta Quest, so it plays like VR should: immersive, comfortable and responsive.</p>
-      </article>
-      <article class="card" data-reveal style="--d:.08s">
-        <div class="num">04 <svg class="icon"><use href="#i-box"/></svg></div>
-        <h3>Unity<br>6.6</h3>
-        <p>Built on a modern engine stack so we can push polish and performance where VR players feel it most.</p>
-      </article>
-      <article class="card" data-reveal style="--d:.16s">
-        <div class="num">05 <svg class="icon"><use href="#i-users"/></svg></div>
-        <h3>Built with<br>the squad</h3>
-        <p>An indie project shaped by its community. Updates, sneak peeks and feedback all happen on Discord and X.</p>
-      </article>
-    </div>
-  </div>
-</section>
-
-<!-- ============ SOCIAL ============ -->
-<section class="social" id="community">
-  <div class="wrap">
-    <div class="social-box" data-reveal>
-      <svg class="ghost-ball a" viewBox="0 0 200 200" aria-hidden="true"><use href="#ball"/></svg>
-      <svg class="ghost-ball b" viewBox="0 0 200 200" aria-hidden="true"><use href="#ball"/></svg>
-      <span class="eyebrow">Join the squad</span>
-      <h2 class="display">Get in <span class="out">the</span> game</h2>
-      <p>Dev updates land here first. Jump into the Discord to chat with the team and the community, and follow on X for clips and news.</p>
-      <div class="social-btns">
-        <a class="btn xl discord evil" href="https://discord.gg/UDTt6UsswX" target="_blank" rel="noopener noreferrer">
-          <span class="eyes" aria-hidden="true"><span class="eye"><i></i></span><span class="eye"><i></i></span></span>
-          <svg class="icon icon-fill"><use href="#i-discord"/></svg>Discord
-        </a>
-        <a class="btn xl bone evil" href="https://x.com/BBHeroesVR" target="_blank" rel="noopener noreferrer">
-          <span class="eyes" aria-hidden="true"><span class="eye"><i></i></span><span class="eye"><i></i></span></span>
-          <svg class="icon icon-fill"><use href="#i-x"/></svg>@BBHeroesVR
-        </a>
-      </div>
-      <p class="handle">x.com/<b>BBHeroesVR</b> &nbsp;/&nbsp; discord.gg/<b>UDTt6UsswX</b></p>
-    </div>
-  </div>
-</section>
-
-<!-- ============ CONTACT ============ -->
-<section class="contact" id="contact">
-  <div class="wrap">
-    <span class="eyebrow" data-reveal>Contact</span>
-    <h2 class="display" data-reveal>Talk to <br>the team</h2>
-    <div class="contact-grid">
-      <div class="person" data-reveal>
-        <span class="bgnum" aria-hidden="true">01</span>
-        <span class="role">Developer</span>
-        <span class="name">Isaiah</span>
-        <a class="mail" href="mailto:isaiahboyd84@gmail.com"><svg class="icon"><use href="#i-mail"/></svg>isaiahboyd84@gmail.com</a>
-        <div class="actions">
-          <a class="chip" href="mailto:isaiahboyd84@gmail.com"><svg class="icon"><use href="#i-arrow"/></svg>Send email</a>
-          <button class="chip" type="button" data-copy="isaiahboyd84@gmail.com"><svg class="icon"><use href="#i-copy"/></svg><span>Copy</span></button>
+  <section class="sec contact" id="contact">
+    <div class="wrap">
+      <h2>Talk to the team</h2>
+      <div class="people">
+        <div class="person">
+          <div><p class="name">Isaiah</p><p class="role">Developer</p></div>
+          <a class="mail" href="mailto:isaiahboyd84@gmail.com">isaiahboyd84@gmail.com</a>
+          <div class="actions">
+            <a class="btn btn-ghost btn-sm" href="mailto:isaiahboyd84@gmail.com"><svg aria-hidden="true"><use href="#i-mail"/></svg>Send email</a>
+            <button class="btn btn-ghost btn-sm" type="button" data-copy="isaiahboyd84@gmail.com"><svg aria-hidden="true"><use href="#i-copy"/></svg><span class="label">Copy</span></button>
+          </div>
         </div>
-      </div>
-      <div class="person" data-reveal style="--d:.1s">
-        <span class="bgnum" aria-hidden="true">02</span>
-        <span class="role">Founder</span>
-        <span class="name">Brianzo</span>
-        <a class="mail" href="mailto:brianzogtag@gmail.com"><svg class="icon"><use href="#i-mail"/></svg>brianzogtag@gmail.com</a>
-        <div class="actions">
-          <a class="chip" href="mailto:brianzogtag@gmail.com"><svg class="icon"><use href="#i-arrow"/></svg>Send email</a>
-          <button class="chip" type="button" data-copy="brianzogtag@gmail.com"><svg class="icon"><use href="#i-copy"/></svg><span>Copy</span></button>
+        <div class="person">
+          <div><p class="name">Brianzo</p><p class="role">Founder</p></div>
+          <a class="mail" href="mailto:brianzogtag@gmail.com">brianzogtag@gmail.com</a>
+          <div class="actions">
+            <a class="btn btn-ghost btn-sm" href="mailto:brianzogtag@gmail.com"><svg aria-hidden="true"><use href="#i-mail"/></svg>Send email</a>
+            <button class="btn btn-ghost btn-sm" type="button" data-copy="brianzogtag@gmail.com"><svg aria-hidden="true"><use href="#i-copy"/></svg><span class="label">Copy</span></button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</section>
-
+  </section>
 </main>
 
-<!-- ============ FOOTER ============ -->
-<footer class="footer">
+<footer class="foot">
   <div class="wrap">
-    <div class="wishlist-row" data-reveal>
-      <div class="wish" id="wish" role="button" tabindex="0" aria-disabled="true" aria-label="Wishlist on Meta — coming soon, not available yet">
-        <div class="lock"><svg class="icon"><use href="#i-lock"/></svg></div>
-        <div>
-          <small>Meta Quest Store</small>
-          <b>Wishlist on <em>Meta</em></b>
-        </div>
-        <span class="tag">SOON!</span>
-      </div>
+    <div class="foot-top">
+      <p class="foot-line">Coming to the Meta Quest Store.</p>
+      <button class="btn btn-ghost glitch" id="wishlist" type="button"><span class="label">Wishlist soon</span></button>
     </div>
-
-    <div class="big-word" aria-hidden="true">BB Heroes</div>
-
     <div class="foot-bar">
-      <span>&copy; <span id="yr">2026</span> Basketball Heroes. All rights reserved. Not affiliated with Meta.</span>
-      <nav class="foot-links" aria-label="Footer">
-        <a href="privacy.html">Privacy Policy</a>
-        <a href="terms.html">Terms of Service</a>
-        <a href="https://x.com/BBHeroesVR" target="_blank" rel="noopener noreferrer"><svg class="icon icon-fill"><use href="#i-x"/></svg>X</a>
-        <a href="https://discord.gg/UDTt6UsswX" target="_blank" rel="noopener noreferrer"><svg class="icon icon-fill"><use href="#i-discord"/></svg>Discord</a>
-      </nav>
+      <span>&copy; 2026 Basketball Heroes. Not affiliated with Meta.</span>
+      <nav aria-label="Footer"><a href="privacy.html">Privacy Policy</a><a href="terms.html">Terms of Service</a><a href="https://x.com/BBHeroesVR" target="_blank" rel="noopener">X</a><a href="https://discord.gg/UDTt6UsswX" target="_blank" rel="noopener">Discord</a></nav>
     </div>
   </div>
 </footer>
-
-<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js" defer></script>
-<script src="js/main.js" defer></script>
 </body>
 </html>

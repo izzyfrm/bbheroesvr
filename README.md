@@ -4,6 +4,6 @@ Marketing site for **Basketball Heroes**, a VR basketball game with superhero en
 
 - Static site in `public/`: `index.html`, `privacy.html`, `terms.html`, `css/style.css`, `js/main.js`
 - No build step. Served by a Cloudflare Worker (static assets) — config in `wrangler.jsonc`, deploy with `npx wrangler deploy`. Custom domains: bbheroesvr.com + www.
-- Smooth scrolling via [Lenis](https://github.com/darkroomengineering/lenis) (CDN, optional); fonts from Google Fonts.
+- 3D ball, hoop and halftone background built with three.js (vendored in `public/js/vendor/`), smooth scrolling via Lenis; fonts from Google Fonts (Archivo).
 
 X: https://x.com/BBHeroesVR · Discord: https://discord.gg/UDTt6UsswX
